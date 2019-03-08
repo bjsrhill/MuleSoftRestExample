@@ -1,0 +1,15 @@
+{
+  "menu": "Education",
+  "items": [
+    {
+      "heading": [
+        "<h4></h4><h2>Education</h2><h4></h4><h2>Atlanta College of Art</h2><h3><p>&#8226B.F.A, Graphic design</p></h3><h4></h4><h2>Georgia State University</h2><h3><p>&#8226Mathematics</p></h3><h4></h4><h2>Birkbeck College, University of London</h2><h3><p>&#8226Art History</p></h3>"
+      ]
+    },
+    {
+      "quotes": [
+        "I use MongoDB on this website to store the website data. MongoDB has a flexible document data model making it possible to store data of any structure."
+      ]
+    }
+  ]
+}

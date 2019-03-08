@@ -1,0 +1,21 @@
+{
+    "_id": "59fe6d4f8d6a7d7f0e86341d",
+    "menu": "Beverly S. Hill",
+    "items": [
+        {
+            "heading": "<h4></h4>What I Do - <span class='text-muted' id='whatIDo'>I am a software engineer focusing on test automation. After years of software development, I realized that many projects were not tested properly and there was a need to improve this part of the development cycle. I currently focus on test automation for REST APIs and web applications. Please view my resume for the details of my software development experience and skills. I am currently working on contract assignments that are six months or longer in duration in the Metro Atlanta area."
+        },
+        {
+            "heading": "<h4></h4>Interests - <span class='text-muted' id='interests'>My personal interests include cycling, running, and hiking. I enjoy using my treadmill desk while working at home. I'm also addicted to problem solving and work on programming problems for fun."
+        },
+        {
+            "quotes": "I love software development. It is like a puzzle to me and I take pride in being able to say 'I did that!' when the work is done."
+        },
+        {
+            "copyright": "©"
+        },
+        {
+            "footerTop": "Back To Top"
+        }
+    ]
+}

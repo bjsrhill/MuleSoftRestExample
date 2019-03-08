@@ -9,18 +9,34 @@
 		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="new-test-suite.xml" />
 	<munit:test name="beverlyshill-test-suite-indexHomeFlowTest" description="Test" doc:id="aee55209-dc56-478b-8702-14952c69f260" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="c558fe4a-41e4-44c5-9f6a-689ed155dd2d" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute attributeName="doc:id" whereValue="69de3d9b-65e8-4afd-ad01-afee3a1fcc97" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsReusableStream('scaffolding-payloads/IndexHomePayload.json') as String]" mediaType="application/json"/>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
 		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="fd874d00-5263-442e-bbb2-af8c3fdc6527" >
+				<munit:attributes value="#[{uriParams: {homePageName: 'Beverly%20S.%20Hill'}}]" />
+			</munit:set-event>
 			<flow-ref doc:name="Flow-ref to indexHomeFlow" doc:id="005e8b22-cc1d-47e5-9088-0f7ac9baea97" name="indexHomeFlow"/>
 		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="8e53f3cb-0b8a-406b-ba03-18cf0cd73974" expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsReusableStream('scaffolding-responses/indexHomeResponse.json') as String)]" />
+		</munit:validation>
 	</munit:test>
-	<munit:test name="new-test-suite-indexFlowTest" description="Test" doc:id="909743f3-3150-43e5-afe9-5ce065b01a7a">
+	<munit:test name="beverlyshill-test-suite-indexFlowTest" description="Test" doc:id="909743f3-3150-43e5-afe9-5ce065b01a7a">
 		<munit:behavior >
 			<munit-tools:mock-when doc:name="Mock when" doc:id="6e8bb37c-7f39-461c-a449-19857d9f82bd" processor="http:request">
 				<munit-tools:with-attributes>
 					<munit-tools:with-attribute attributeName="doc:id" whereValue="2102b67c-e28d-4358-8f94-d4fd0ce0b032" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return>
-					<munit-tools:payload value="#[MunitTools::getResourceAsReusableStream('scaffolding-payloads/index-payload.json') as String]" mediaType="application/json"/>
+					<munit-tools:payload value="#[MunitTools::getResourceAsReusableStream('scaffolding-payloads/IndexPayload.json') as String]" mediaType="application/json"/>
 				</munit-tools:then-return>
 			</munit-tools:mock-when>
 		</munit:behavior>
@@ -32,9 +48,23 @@
 		</munit:validation>
 	</munit:test>
 	<munit:test name="new-test-suite-indexEducationFlowTest" description="Test" doc:id="06e50f77-7a63-476a-9a42-3e380afca14a" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="124bd38b-5077-4e93-b3e4-11597c1cee48" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute attributeName="doc:id" whereValue="09680eae-33ce-41b4-9932-37044c5f894a" />
+					<munit-tools:with-attribute attributeName="doc:id" whereValue="09680eae-33ce-41b4-9932-37044c5f894a" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsReusableStream('scaffolding-payloads/IndexEducationPayload.json') as String]" mediaType="application/json"/>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
 		<munit:execution >
 			<flow-ref doc:name="Flow-ref to indexEducationFlow" doc:id="25729f94-dbdf-4b85-bfa8-ba8e7a83bb13" name="indexEducationFlow"/>
 		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="4d978212-9dc3-4c20-89a3-e0b9f2fb5a9a" expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsReusableStream('scaffolding-responses/indexEducationResponse.json') as String)]"/>
+		</munit:validation>
 	</munit:test>
 
 </mule>
