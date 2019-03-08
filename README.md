@@ -1,0 +1,1 @@
+This MuleSoft project is an example of using HTTP requests to get the REST values from a web site. The project includes properties by environment and Munit tests.

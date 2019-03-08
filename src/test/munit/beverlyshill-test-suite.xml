@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="new-test-suite.xml" />
+	<munit:test name="beverlyshill-test-suite-indexHomeFlowTest" description="Test" doc:id="aee55209-dc56-478b-8702-14952c69f260" >
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indexHomeFlow" doc:id="005e8b22-cc1d-47e5-9088-0f7ac9baea97" name="indexHomeFlow"/>
+		</munit:execution>
+	</munit:test>
+	<munit:test name="new-test-suite-indexFlowTest" description="Test" doc:id="909743f3-3150-43e5-afe9-5ce065b01a7a">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="6e8bb37c-7f39-461c-a449-19857d9f82bd" processor="http:request">
+				<munit-tools:with-attributes>
+					<munit-tools:with-attribute attributeName="doc:id" whereValue="2102b67c-e28d-4358-8f94-d4fd0ce0b032" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:payload value="#[MunitTools::getResourceAsReusableStream('scaffolding-payloads/index-payload.json') as String]" mediaType="application/json"/>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indexFlow" doc:id="32636058-433c-4357-b2f7-0df173bd06aa" name="indexFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b7733945-209e-40e4-ba1d-f89ea2bc7678" expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsReusableStream('scaffolding-responses/indexResponse.json') as String)]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="new-test-suite-indexEducationFlowTest" description="Test" doc:id="06e50f77-7a63-476a-9a42-3e380afca14a" >
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indexEducationFlow" doc:id="25729f94-dbdf-4b85-bfa8-ba8e7a83bb13" name="indexEducationFlow"/>
+		</munit:execution>
+	</munit:test>
+
+</mule>

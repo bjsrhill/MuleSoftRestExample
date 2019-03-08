@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="2b650131-6c12-4088-be87-c449883d2a06" basePath="/index" enableCookies="false">
+		<http:request-connection host="${hostName}" />
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="3babb3dc-5220-4383-ac98-47d7967ed3b6" file="application-prod.properties" />
+	<flow name="indexFlow" doc:id="20dccecd-537d-4db7-9249-c86c141de8e2" >
+		<http:request method="GET" doc:name="Request" doc:id="2102b67c-e28d-4358-8f94-d4fd0ce0b032" config-ref="HTTP_Request_configuration" path="/"/>
+		<ee:transform doc:name="Transform Message" doc:id="a7aa4085-abb5-4ed5-963c-fa33b36eac79" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"homeMenu" : payload[0],
+	"professionalExMenu": payload[1],
+	"OtherExperienceMenu": payload[2],
+	"technicalSkillsMenu": payload[3],
+	"trainingMenu": payload[4],
+	"educationMenu": payload[5]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b74e3e45-fad0-4b6f-b412-f0ac8cf5d44f" >
+				<set-variable value="#[error.errorMessage.payload.data.message]" doc:name="Set detailedError" doc:id="dc3dc028-9daa-4f3b-b05e-c756e24fd69b" variableName="detailedError" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

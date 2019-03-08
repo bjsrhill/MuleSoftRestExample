@@ -1,0 +1,74 @@
+#%RAML 1.0
+title: beverlyshill.solutions
+baseUri: beverlyshill.solutions
+version: 1.0
+mediaType:
+  - application/json
+/index:    
+  displayName: Index page
+  description: Index Page Menus
+  get:
+    responses:
+      200:
+    body:
+      application/json:
+        example: |
+          [
+              "Beverly S. Hill",
+              "Professional Experience",
+              "Other Experience",
+              "Technical Skills",
+              "Training",
+              "Education"
+          ]
+  /{homePageName}:
+    displayName: Home Page
+    description: Beverly S. Hill home page
+    get:
+      responses: 
+        200:
+          body: 
+            application/json:
+              example:
+                {
+                  "_id": "59fe6d4f8d6a7d7f0e86341d",
+                  "menu": "Beverly S. Hill",
+                  "items": [
+                      {
+                          "heading": "<h4></h4>What I Do - <span class='text-muted' id='whatIDo'>I am a software engineer focusing on test automation. After years of software development, I realized that many projects were not tested properly and there was a need to improve this part of the development cycle. I currently focus on test automation for REST APIs and web applications. Please view my resume for the details of my software development experience and skills. I am currently working on contract assignments that are six months or longer in duration in the Metro Atlanta area."
+                      },
+                      {
+                          "heading": "<h4></h4>Interests - <span class='text-muted' id='interests'>My personal interests include cycling, running, and hiking. I enjoy using my treadmill desk while working at home. I'm also addicted to problem solving and work on programming problems for fun."
+                      },
+                      {
+                          "quotes": "I love software development. It is like a puzzle to me and I take pride in being able to say 'I did that!' when the work is done."
+                      },
+                      {
+                          "copyright": "©"
+                      },
+                      {
+                          "footerTop": "Back To Top"
+                      }
+                  ]
+              }
+  /Education:
+    displayName: Education
+    description: Education Page
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+                  "_id": "59fe6e958d6a7d7f0e86342c",
+                  "menu": "Education",
+                  "items": [
+                      {
+                          "heading": "<h4></h4><h2>Education</h2><h4></h4><h2>Atlanta College of Art</h2><h3><p>&#8226B.F.A, Graphic design</p></h3><h4></h4><h2>Georgia State University</h2><h3><p>&#8226Mathematics</p></h3><h4></h4><h2>Birkbeck College, University of London</h2><h3><p>&#8226Art History</p></h3>"
+                      },
+                      {
+                          "quotes": "I use MongoDB on this website to store the website data. MongoDB has a flexible document data model making it possible to store data of any structure."
+                      }
+                  ]
+              }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="indexHomeFlow" doc:id="9948ef57-9863-4743-a1d4-6bb75cce5b73" >
+		<http:request method="GET" doc:name="Request" doc:id="69de3d9b-65e8-4afd-ad01-afee3a1fcc97" config-ref="HTTP_Request_configuration" path="#[attributes.uriParams.homePageName]"/>
+		<choice doc:name="Choice" doc:id="48aee10c-48f1-4709-83b7-9f5370a2360e" >
+			<when expression="#[payload.menu == null]">
+				<raise-error doc:name="Raise error" doc:id="ad520e14-84e0-4dc8-b8ce-6440429bcc96" type="HOME:NOT_FOUND"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="56c7b647-5ce3-47c8-8d2a-b1e216287ef8">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "menu": payload.menu,
+    "items": [
+        {
+            "heading": payload.items[0]
+        },
+        {
+            "heading": payload.items[1]
+        },
+        {
+            "quotes": payload.items[2]
+        },
+        {
+            "copyright": payload.items[3]
+        },
+        {
+            "footerTop": payload.items[4]
+        }
+    ]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</otherwise>
+		</choice>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="174265ff-7208-4df1-a852-33c21ab5e6e8" >
+				<set-variable value="#[error.errorMessage.payload.data.message]" doc:name="Set detailedError" doc:id="6d63f69d-55d7-4b12-8c1d-2c320755a36f" variableName="detailedError"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>
